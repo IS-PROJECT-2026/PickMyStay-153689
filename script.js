@@ -114,3 +114,56 @@ const hotels = [
     amenities: ["WiFi", "Shuttle", "24hr Reception"]
   }
 ];
+
+/* 7. RENDERING                                                             */
+/* ---------------------------------------------------------------------- */
+ 
+/** Renders a ranked, filtered list of hotel cards into the grid. */
+function renderHotels(rankedList) {
+  hotelGrid.innerHTML = "";
+ 
+  if (rankedList.length === 0) {
+    hotelGrid.hidden = true;
+    noResults.hidden = false;
+    resultsCount.textContent = "";
+    return;
+  }
+ 
+  hotelGrid.hidden = false;
+  noResults.hidden = true;
+  resultsCount.textContent = `${rankedList.length} hotel${rankedList.length === 1 ? "" : "s"} ranked to your preferences`;
+ 
+  rankedList.forEach((hotel, index) => {
+    const card = document.createElement("article");
+    card.className = "hotel-card" + (index === 0 ? " best-match" : "");
+    card.dataset.hotelId = hotel.id;
+ 
+    card.innerHTML = `
+      ${index === 0 ? '<span class="best-badge">Best Match</span>' : ""}
+      <img class="hotel-image" src="${hotel.image}" alt="${hotel.name}">
+      <div class="hotel-body">
+        <div class="hotel-top-row">
+          <span class="hotel-name">${hotel.name}</span>
+          <span class="match-score">${hotel.matchScore}%</span>
+        </div>
+        <p class="hotel-location">${hotel.location}</p>
+        <div class="hotel-meta">
+          <span class="hotel-price">KES ${hotel.pricePerNight.toLocaleString()}/night</span>
+          <span class="hotel-rating">★ ${hotel.rating.toFixed(1)}</span>
+        </div>
+        <div class="hotel-amenities">
+          ${hotel.amenities.slice(0, 3).map(a => `<span class="amenity-tag">${a}</span>`).join("")}
+        </div>
+        <div class="hotel-actions">
+          <button class="btn btn-ghost details-btn">View Details</button>
+          <button class="btn btn-primary book-btn">Book Now</button>
+        </div>
+      </div>
+    `;
+ 
+    card.querySelector(".details-btn").addEventListener("click", () => openHotelDetails(hotel.id));
+    card.querySelector(".book-btn").addEventListener("click", () => openBookingForm(hotel.id));
+ 
+    hotelGrid.appendChild(card);
+  });
+}
