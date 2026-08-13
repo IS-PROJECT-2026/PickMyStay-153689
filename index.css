@@ -37,3 +37,65 @@
   background: var(--ink);
   margin: 5px 0;
 }
+/* ============ Hotel cards ============ */
+.hotel-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 26px;
+}
+.hotel-card {
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: transform 0.18s ease;
+}
+.hotel-card:hover { transform: translateY(-4px); }
+.hotel-card.best-match { border: 2px solid var(--gold); }
+.best-badge {
+  position: absolute;
+  top: 14px; left: 14px;
+  background: var(--gold);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  border-radius: 999px;
+  z-index: 2;
+}
+.hotel-image { width: 100%; height: 190px; object-fit: cover; background: var(--sage-deep); }
+.hotel-body { padding: 20px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+.hotel-top-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+.hotel-name { font-family: var(--font-display); font-size: 1.15rem; font-weight: 600; }
+.match-score {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--forest);
+  background: var(--sage-deep);
+  padding: 4px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.hotel-location { font-size: 0.85rem; color: var(--text-muted); }
+.hotel-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; }
+.hotel-price { font-family: var(--font-mono); font-weight: 600; }
+.hotel-rating { color: var(--rust); font-weight: 600; }
+.hotel-amenities { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; }
+.amenity-tag {
+  font-size: 0.72rem;
+  padding: 3px 9px;
+  background: var(--sage-deep);
+  border-radius: 999px;
+  color: var(--ink-soft);
+}
+.hotel-actions { display: flex; gap: 10px; margin-top: auto; padding-top: 8px; }
+.hotel-actions .btn { flex: 1; padding: 10px 14px; font-size: 0.85rem; }
+ 

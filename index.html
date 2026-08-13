@@ -28,6 +28,41 @@
   </div>
 </header>
 
+<!-- ============ COMPARE / FILTERS ============ -->
+<section class="compare" id="compare">
+  <div class="section-inner">
+    <p class="eyebrow">Step two</p>
+    <h2>Compare Your Matches</h2>
+ 
+    <div class="filters">
+      <div class="filter-field">
+        <label for="searchInput">Search</label>
+        <input type="text" id="searchInput" placeholder="Hotel name or location…">
+      </div>
+      <div class="filter-field">
+        <label for="maxPriceInput">Maximum price (KES/night)</label>
+        <input type="number" id="maxPriceInput" placeholder="e.g. 10000" min="0">
+      </div>
+      <div class="filter-field">
+        <label for="minRatingInput">Minimum rating</label>
+        <select id="minRatingInput">
+          <option value="0">Any</option>
+          <option value="3">3.0+</option>
+          <option value="3.5">3.5+</option>
+          <option value="4">4.0+</option>
+          <option value="4.5">4.5+</option>
+        </select>
+      </div>
+      <button class="btn btn-ghost" id="resetFiltersBtn">Reset filters</button>
+    </div>
+ 
+    <p class="results-count" id="resultsCount"></p>
+ 
+    <div class="hotel-grid" id="hotelGrid"></div>
+    <p class="no-results" id="noResults" hidden>No hotels match your current filters.</p>
+  </div>
+</section>
+
 <script src="script.js"></script>
 </body>
 </html>
