@@ -140,6 +140,7 @@ function renderHotels(rankedList) {
  
     card.innerHTML = `
       ${index === 0 ? '<span class="best-badge">Best Match</span>' : ""}
+      
       <img class="hotel-image" src="${hotel.image}" alt="${hotel.name}">
       <div class="hotel-body">
         <div class="hotel-top-row">
