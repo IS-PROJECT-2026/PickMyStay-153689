@@ -1,5 +1,11 @@
+/* ==========================================================================
+   STAYMATCH — script.js
+   Handles: hotel dataset, weighted scoring algorithm, filtering, rendering,
+   hotel details modal, booking flow + validation, booking confirmation.
+   ========================================================================== */
+
 /* ---------------------------------------------------------------------- */
-/* 1. HOTEL DATASET                                                       */
+/* 1. HOTEL DATASET                                                        */
 /* ---------------------------------------------------------------------- */
 
 const hotels = [
@@ -116,9 +122,38 @@ const hotels = [
 ];
 
 /* ---------------------------------------------------------------------- */
+/* 2. STATE                                                                 */
+/* ---------------------------------------------------------------------- */
+
+let weights = { price: 50, location: 30, rating: 20 }; // raw slider values
+let activeHotelId = null; // hotel currently open in the details/booking modals
+
+/* ---------------------------------------------------------------------- */
+/* 3. DOM REFERENCES                                                        */
+/* ---------------------------------------------------------------------- */
+
+const hotelGrid = document.getElementById("hotelGrid");
+const noResults = document.getElementById("noResults");
+const resultsCount = document.getElementById("resultsCount");
+
+const priceWeightInput = document.getElementById("priceWeight");
+const locationWeightInput = document.getElementById("locationWeight");
+const ratingWeightInput = document.getElementById("ratingWeight");
+const priceWeightLabel = document.getElementById("priceWeightLabel");
+const locationWeightLabel = document.getElementById("locationWeightLabel");
+const ratingWeightLabel = document.getElementById("ratingWeightLabel");
+
+const segPrice = document.getElementById("segPrice");
+const segLocation = document.getElementById("segLocation");
+const segRating = document.getElementById("segRating");
+
+const heroDialRing = document.getElementById("heroDialRing");
+const heroDialValue = document.getElementById("heroDialValue");
+
+/* ---------------------------------------------------------------------- */
 /* 4. WEIGHT NORMALIZATION                                                  */
 /* ---------------------------------------------------------------------- */
- 
+
 /**
  * Reads the raw slider values and normalizes them so price + location +
  * rating always sum to exactly 100%. Sliders don't naturally sum to 100,
@@ -131,40 +166,40 @@ function getNormalizedWeights() {
     rating: Number(ratingWeightInput.value)
   };
   const total = raw.price + raw.location + raw.rating;
- 
+
   if (total === 0) {
     // avoid division by zero — fall back to an even split
     return { price: 33.3, location: 33.3, rating: 33.4 };
   }
- 
+
   return {
     price: (raw.price / total) * 100,
     location: (raw.location / total) * 100,
     rating: (raw.rating / total) * 100
   };
 }
- 
+
 /**
  * Updates the % labels, the hero dial, and the donut chart to reflect
  * the current normalized weights. Purely visual — does not recalculate scores.
  */
 function refreshWeightDisplays() {
   const w = getNormalizedWeights();
- 
+
   priceWeightLabel.textContent = `${Math.round(w.price)}%`;
   locationWeightLabel.textContent = `${Math.round(w.location)}%`;
   ratingWeightLabel.textContent = `${Math.round(w.rating)}%`;
- 
+
   heroDialValue.textContent = `${Math.round(w.price)} / ${Math.round(w.location)} / ${Math.round(w.rating)}`;
   heroDialRing.style.background = `conic-gradient(
     var(--ink) 0% ${w.price}%,
     var(--gold) ${w.price}% ${w.price + w.location}%,
     var(--rust) ${w.price + w.location}% 100%
   )`;
- 
+
   drawWeightDonut(w);
 }
- 
+
 /**
  * Draws the three-segment donut chart (SVG circles) to match the current
  * normalized weights, using stroke-dasharray/offset on a shared circumference.
@@ -172,24 +207,25 @@ function refreshWeightDisplays() {
 function drawWeightDonut(w) {
   const r = 50;
   const circumference = 2 * Math.PI * r;
- 
+
   const priceLen = (w.price / 100) * circumference;
   const locationLen = (w.location / 100) * circumference;
   const ratingLen = (w.rating / 100) * circumference;
- 
+
   segPrice.style.strokeDasharray = `${priceLen} ${circumference - priceLen}`;
   segPrice.style.strokeDashoffset = 0;
- 
+
   segLocation.style.strokeDasharray = `${locationLen} ${circumference - locationLen}`;
   segLocation.style.strokeDashoffset = -priceLen;
- 
+
   segRating.style.strokeDasharray = `${ratingLen} ${circumference - ratingLen}`;
   segRating.style.strokeDashoffset = -(priceLen + locationLen);
 }
+
 /* ---------------------------------------------------------------------- */
 /* 5. SCORING ALGORITHM                                                     */
 /* ---------------------------------------------------------------------- */
- 
+
 /**
  * Cheaper hotels score higher. Scores each hotel's price relative to the
  * cheapest and most expensive hotel CURRENTLY in the filtered list, so the
@@ -199,24 +235,24 @@ function calculatePriceScore(hotel, hotelList) {
   const prices = hotelList.map(h => h.pricePerNight);
   const min = Math.min(...prices);
   const max = Math.max(...prices);
- 
+
   if (max === min) return 100; // every visible hotel costs the same
- 
+
   // invert the ratio so the cheapest hotel gets 100, the priciest gets 0
   const ratio = (hotel.pricePerNight - min) / (max - min);
   return (1 - ratio) * 100;
 }
- 
+
 /** Converts the hotel's 1–10 locationScore into a 0–100 scale. */
 function calculateLocationScore(hotel) {
   return (hotel.locationScore / 10) * 100;
 }
- 
+
 /** Converts the hotel's 5-point rating into a 0–100 scale (e.g. 4.5/5 = 90/100). */
 function calculateRatingScore(hotel) {
   return (hotel.rating / 5) * 100;
 }
- 
+
 /**
  * Combines the three sub-scores using the user's normalized weights:
  * Overall = (Price × PriceWeight) + (Location × LocationWeight) + (Rating × RatingWeight)
@@ -225,42 +261,42 @@ function calculateWeightedScore(hotel, hotelList, weights) {
   const priceScore = calculatePriceScore(hotel, hotelList);
   const locationScore = calculateLocationScore(hotel);
   const ratingScore = calculateRatingScore(hotel);
- 
+
   const overall =
     priceScore * (weights.price / 100) +
     locationScore * (weights.location / 100) +
     ratingScore * (weights.rating / 100);
- 
+
   return Math.round(overall * 10) / 10; // round to 1 decimal place
 }
- 
+
 /** Scores every hotel in the list and returns them sorted highest-first. */
 function rankHotels(hotelList) {
   const w = getNormalizedWeights();
- 
+
   const scored = hotelList.map(hotel => ({
     ...hotel,
     matchScore: calculateWeightedScore(hotel, hotelList, w)
   }));
- 
+
   return scored.sort((a, b) => b.matchScore - a.matchScore);
 }
- 
+
 /* ---------------------------------------------------------------------- */
 /* 6. FILTERING                                                             */
 /* ---------------------------------------------------------------------- */
- 
+
 const searchInput = document.getElementById("searchInput");
 const maxPriceInput = document.getElementById("maxPriceInput");
 const minRatingInput = document.getElementById("minRatingInput");
 const resetFiltersBtn = document.getElementById("resetFiltersBtn");
- 
+
 /** Applies search text, max price, and min rating filters to the full dataset. */
 function filterHotels() {
   const query = searchInput.value.trim().toLowerCase();
   const maxPrice = maxPriceInput.value ? Number(maxPriceInput.value) : Infinity;
   const minRating = Number(minRatingInput.value);
- 
+
   return hotels.filter(hotel => {
     const matchesQuery =
       !query ||
@@ -268,46 +304,46 @@ function filterHotels() {
       hotel.location.toLowerCase().includes(query);
     const matchesPrice = hotel.pricePerNight <= maxPrice;
     const matchesRating = hotel.rating >= minRating;
- 
+
     return matchesQuery && matchesPrice && matchesRating;
   });
 }
- 
+
 resetFiltersBtn.addEventListener("click", () => {
   searchInput.value = "";
   maxPriceInput.value = "";
   minRatingInput.value = "0";
   updateRecommendations();
 });
- 
+
 [searchInput, maxPriceInput, minRatingInput].forEach(el => {
   el.addEventListener("input", updateRecommendations);
 });
- 
+
 /* ---------------------------------------------------------------------- */
 /* 7. RENDERING                                                             */
 /* ---------------------------------------------------------------------- */
- 
+
 /** Renders a ranked, filtered list of hotel cards into the grid. */
 function renderHotels(rankedList) {
   hotelGrid.innerHTML = "";
- 
+
   if (rankedList.length === 0) {
     hotelGrid.hidden = true;
     noResults.hidden = false;
     resultsCount.textContent = "";
     return;
   }
- 
+
   hotelGrid.hidden = false;
   noResults.hidden = true;
   resultsCount.textContent = `${rankedList.length} hotel${rankedList.length === 1 ? "" : "s"} ranked to your preferences`;
- 
+
   rankedList.forEach((hotel, index) => {
     const card = document.createElement("article");
     card.className = "hotel-card" + (index === 0 ? " best-match" : "");
     card.dataset.hotelId = hotel.id;
- 
+
     card.innerHTML = `
       ${index === 0 ? '<span class="best-badge">Best Match</span>' : ""}
       <img class="hotel-image" src="${hotel.image}" alt="${hotel.name}">
@@ -330,14 +366,14 @@ function renderHotels(rankedList) {
         </div>
       </div>
     `;
- 
+
     card.querySelector(".details-btn").addEventListener("click", () => openHotelDetails(hotel.id));
     card.querySelector(".book-btn").addEventListener("click", () => openBookingForm(hotel.id));
- 
+
     hotelGrid.appendChild(card);
   });
 }
- 
+
 /** Central refresh function: filters, scores, ranks, and re-renders. */
 function updateRecommendations() {
   refreshWeightDisplays();
@@ -345,21 +381,22 @@ function updateRecommendations() {
   const ranked = rankHotels(filtered);
   renderHotels(ranked);
 }
- /* ---------------------------------------------------------------------- */
+
+/* ---------------------------------------------------------------------- */
 /* 8. HOTEL DETAILS MODAL                                                   */
 /* ---------------------------------------------------------------------- */
- 
+
 const detailsModal = document.getElementById("detailsModal");
 const closeDetailsModal = document.getElementById("closeDetailsModal");
- 
+
 function openHotelDetails(hotelId) {
   const filtered = filterHotels();
   const ranked = rankHotels(filtered);
   const hotel = ranked.find(h => h.id === hotelId) || rankHotels(hotels).find(h => h.id === hotelId);
   if (!hotel) return;
- 
+
   activeHotelId = hotelId;
- 
+
   document.getElementById("detailsImage").src = hotel.image;
   document.getElementById("detailsImage").alt = hotel.name;
   document.getElementById("detailsHotelName").textContent = hotel.name;
@@ -372,10 +409,10 @@ function openHotelDetails(hotelId) {
   document.getElementById("detailsAmenities").innerHTML = hotel.amenities
     .map(a => `<span class="amenity-tag">${a}</span>`)
     .join("");
- 
+
   detailsModal.hidden = false;
 }
- 
+
 closeDetailsModal.addEventListener("click", () => (detailsModal.hidden = true));
 detailsModal.addEventListener("click", e => {
   if (e.target === detailsModal) detailsModal.hidden = true;
@@ -384,3 +421,152 @@ document.getElementById("detailsBookBtn").addEventListener("click", () => {
   detailsModal.hidden = true;
   openBookingForm(activeHotelId);
 });
+
+/* ---------------------------------------------------------------------- */
+/* 9. BOOKING FLOW                                                          */
+/* ---------------------------------------------------------------------- */
+
+const bookingModal = document.getElementById("bookingModal");
+const closeBookingModal = document.getElementById("closeBookingModal");
+const bookingForm = document.getElementById("bookingForm");
+const bookingConfirmation = document.getElementById("bookingConfirmation");
+
+function openBookingForm(hotelId) {
+  const hotel = hotels.find(h => h.id === hotelId);
+  if (!hotel) return;
+
+  activeHotelId = hotelId;
+  document.getElementById("bookingHotelName").textContent = hotel.name;
+
+  bookingForm.reset();
+  bookingForm.hidden = false;
+  bookingConfirmation.hidden = true;
+  clearBookingErrors();
+
+  bookingModal.hidden = false;
+}
+
+function closeBooking() {
+  bookingModal.hidden = true;
+}
+
+closeBookingModal.addEventListener("click", closeBooking);
+bookingModal.addEventListener("click", e => {
+  if (e.target === bookingModal) closeBooking();
+});
+document.getElementById("backToHotelsBtn").addEventListener("click", () => {
+  closeBooking();
+  document.getElementById("compare").scrollIntoView({ behavior: "smooth" });
+});
+
+function clearBookingErrors() {
+  document.querySelectorAll(".field-error").forEach(el => (el.textContent = ""));
+}
+
+/** Validates every booking field and writes inline error messages. Returns true if valid. */
+function validateBookingForm() {
+  clearBookingErrors();
+  let isValid = true;
+
+  const name = document.getElementById("guestName").value.trim();
+  const email = document.getElementById("guestEmail").value.trim();
+  const checkin = document.getElementById("checkinDate").value;
+  const checkout = document.getElementById("checkoutDate").value;
+  const guests = Number(document.getElementById("guestCount").value);
+
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  if (!name) {
+    document.getElementById("guestNameError").textContent = "Guest name is required.";
+    isValid = false;
+  }
+
+  if (!emailPattern.test(email)) {
+    document.getElementById("guestEmailError").textContent = "Enter a valid email address.";
+    isValid = false;
+  }
+
+  if (!checkin || new Date(checkin) < today) {
+    document.getElementById("checkinDateError").textContent = "Check-in date cannot be in the past.";
+    isValid = false;
+  }
+
+  if (!checkout || (checkin && new Date(checkout) <= new Date(checkin))) {
+    document.getElementById("checkoutDateError").textContent = "Check-out must be after check-in.";
+    isValid = false;
+  }
+
+  if (!guests || guests < 1) {
+    document.getElementById("guestCountError").textContent = "At least 1 guest is required.";
+    isValid = false;
+  }
+
+  return isValid;
+}
+
+bookingForm.addEventListener("submit", e => {
+  e.preventDefault();
+  if (validateBookingForm()) {
+    showBookingConfirmation();
+  }
+});
+
+/** Generates a short random confirmation code, e.g. "SM-4G7K2P". */
+function generateConfirmationNumber() {
+  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  let code = "";
+  for (let i = 0; i < 6; i++) {
+    code += chars[Math.floor(Math.random() * chars.length)];
+  }
+  return `SM-${code}`;
+}
+
+function showBookingConfirmation() {
+  const hotel = hotels.find(h => h.id === activeHotelId);
+
+  document.getElementById("confirmNumber").textContent = generateConfirmationNumber();
+  document.getElementById("confirmHotel").textContent = hotel.name;
+  document.getElementById("confirmGuest").textContent = document.getElementById("guestName").value.trim();
+  document.getElementById("confirmCheckin").textContent = document.getElementById("checkinDate").value;
+  document.getElementById("confirmCheckout").textContent = document.getElementById("checkoutDate").value;
+  document.getElementById("confirmGuestCount").textContent = document.getElementById("guestCount").value;
+
+  bookingForm.hidden = true;
+  bookingConfirmation.hidden = false;
+}
+
+/* ---------------------------------------------------------------------- */
+/* 10. NAV, HERO, WEIGHT SLIDERS — EVENT WIRING                             */
+/* ---------------------------------------------------------------------- */
+
+document.getElementById("navToggle").addEventListener("click", () => {
+  document.getElementById("navLinks").classList.toggle("open");
+});
+
+document.querySelectorAll(".nav-links a").forEach(link => {
+  link.addEventListener("click", () => document.getElementById("navLinks").classList.remove("open"));
+});
+
+document.getElementById("navFindBtn").addEventListener("click", () => {
+  document.getElementById("preferences").scrollIntoView({ behavior: "smooth" });
+});
+
+document.getElementById("startComparingBtn").addEventListener("click", () => {
+  document.getElementById("compare").scrollIntoView({ behavior: "smooth" });
+});
+
+document.getElementById("updateRecsBtn").addEventListener("click", updateRecommendations);
+
+[priceWeightInput, locationWeightInput, ratingWeightInput].forEach(input => {
+  input.addEventListener("input", refreshWeightDisplays);
+});
+
+document.getElementById("footerYear").textContent = new Date().getFullYear();
+
+/* ---------------------------------------------------------------------- */
+/* 11. INITIAL RENDER                                                       */
+/* ---------------------------------------------------------------------- */
+
+updateRecommendations();
