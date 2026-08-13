@@ -484,6 +484,7 @@ input, select { font-family: inherit; }
   .footer-meta { text-align: left; }
 }
 
+
 @media (max-width: 640px) {
   .nav-links { position: absolute; top: 100%; left: 0; right: 0; background: var(--paper); flex-direction: column; padding: 18px 32px; border-bottom: 1px solid var(--border); display: none; }
   .nav-links.open { display: flex; }
