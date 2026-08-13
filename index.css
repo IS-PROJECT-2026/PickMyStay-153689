@@ -1,4 +1,10 @@
-root {
+/* ==========================================================================
+   STAYMATCH — Design tokens
+   Palette: Ink Navy / Savanna Gold / Mist Sage / Clay Rust / Deep Forest
+   Type: Fraunces (display) + Work Sans (body/UI) + IBM Plex Mono (data)
+   ========================================================================== */
+
+:root {
   --ink: #14213D;
   --ink-soft: #2C3A5C;
   --paper: #FBF9F3;
@@ -10,21 +16,21 @@ root {
   --forest: #244339;
   --text-muted: #5B6472;
   --border: #D8D4C4;
- 
+
   --font-display: 'Fraunces', serif;
   --font-body: 'Work Sans', sans-serif;
   --font-mono: 'IBM Plex Mono', monospace;
- 
+
   --radius-sm: 8px;
   --radius-md: 14px;
   --radius-lg: 24px;
   --shadow-card: 0 10px 30px -14px rgba(20, 33, 61, 0.25);
   --shadow-modal: 0 24px 60px -20px rgba(20, 33, 61, 0.45);
 }
- 
+
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
- 
+
 body {
   margin: 0;
   font-family: var(--font-body);
@@ -33,20 +39,20 @@ body {
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
 }
- 
+
 h1, h2, h3 { font-family: var(--font-display); margin: 0; letter-spacing: -0.01em; }
 p { margin: 0; }
 a { color: inherit; text-decoration: none; }
 em { font-style: italic; color: var(--gold); }
 button { font-family: inherit; cursor: pointer; }
 input, select { font-family: inherit; }
- 
+
 .section-inner {
   max-width: 1120px;
   margin: 0 auto;
   padding: 88px 32px;
 }
- 
+
 .eyebrow {
   font-family: var(--font-mono);
   text-transform: uppercase;
@@ -55,7 +61,7 @@ input, select { font-family: inherit; }
   color: var(--forest);
   margin-bottom: 14px;
 }
- 
+
 /* ============ Buttons ============ */
 .btn {
   display: inline-flex;
@@ -81,7 +87,7 @@ input, select { font-family: inherit; }
 }
 .btn-ghost:hover { background: rgba(20, 33, 61, 0.06); }
 .btn-block { width: 100%; margin-top: 10px; }
- 
+
 /* ============ Nav ============ */
 .nav {
   position: sticky;
@@ -121,7 +127,7 @@ input, select { font-family: inherit; }
   background: var(--ink);
   margin: 5px 0;
 }
- 
+
 /* ============ Hero ============ */
 .hero { padding: 72px 32px 40px; }
 .hero-inner {
@@ -140,7 +146,7 @@ input, select { font-family: inherit; }
 }
 .hero-sub { font-size: 1.05rem; color: var(--text-muted); max-width: 46ch; margin-bottom: 32px; }
 .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
- 
+
 .hero-dial { display: flex; flex-direction: column; align-items: center; gap: 18px; }
 .dial-ring {
   width: 260px;
@@ -183,12 +189,12 @@ input, select { font-family: inherit; }
 .swatch-price { background: var(--ink); }
 .swatch-location { background: var(--gold); }
 .swatch-rating { background: var(--rust); }
- 
+
 /* ============ Preferences / Fader panel ============ */
 .preferences { background: var(--paper); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
 .preferences h2, .compare h2, .how h2, .about h2 { font-size: clamp(1.7rem, 3vw, 2.3rem); margin-bottom: 12px; }
 .section-sub { color: var(--text-muted); max-width: 62ch; margin-bottom: 44px; }
- 
+
 .fader-panel {
   display: grid;
   grid-template-columns: 1fr auto;
@@ -239,7 +245,7 @@ input, select { font-family: inherit; }
 }
 .fader-name { font-weight: 600; font-size: 0.95rem; }
 .fader-pct { font-family: var(--font-mono); color: var(--gold-soft); font-size: 0.9rem; }
- 
+
 .fader-readout { display: flex; flex-direction: column; align-items: center; gap: 20px; }
 .donut-wrap { position: relative; width: 130px; height: 130px; }
 .donut { width: 130px; height: 130px; transform: rotate(-90deg); }
@@ -253,7 +259,7 @@ input, select { font-family: inherit; }
   display: flex; align-items: center; justify-content: center;
   font-family: var(--font-mono); font-weight: 600; font-size: 0.9rem;
 }
- 
+
 /* ============ Filters ============ */
 .filters {
   display: flex;
@@ -279,7 +285,7 @@ input, select { font-family: inherit; }
 .fader-input:focus-visible, .btn:focus-visible, a:focus-visible {
   outline: 2px solid var(--gold); outline-offset: 2px;
 }
- 
+
 .results-count { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 24px; }
 .no-results {
   text-align: center;
@@ -289,7 +295,7 @@ input, select { font-family: inherit; }
   border: 1px dashed var(--border);
   border-radius: var(--radius-md);
 }
- 
+
 /* ============ Hotel cards ============ */
 .hotel-grid {
   display: grid;
@@ -351,7 +357,7 @@ input, select { font-family: inherit; }
 }
 .hotel-actions { display: flex; gap: 10px; margin-top: auto; padding-top: 8px; }
 .hotel-actions .btn { flex: 1; padding: 10px 14px; font-size: 0.85rem; }
- 
+
 /* ============ How it works ============ */
 .how-steps {
   display: grid;
@@ -374,12 +380,12 @@ input, select { font-family: inherit; }
 }
 .how-step h3 { font-size: 1.1rem; margin-bottom: 8px; }
 .how-step p { color: var(--text-muted); font-size: 0.92rem; }
- 
+
 /* ============ About ============ */
 .about { background: var(--ink); color: var(--paper); }
 .about-inner p { color: rgba(251,249,243,0.75); max-width: 68ch; font-size: 1.02rem; }
 .about .eyebrow { color: var(--gold-soft); }
- 
+
 /* ============ Footer ============ */
 .footer { background: var(--forest); color: var(--paper); }
 .footer-inner {
@@ -394,3 +400,97 @@ input, select { font-family: inherit; }
 .footer-links a:hover { color: var(--gold-soft); }
 .footer-meta { font-size: 0.8rem; color: rgba(251,249,243,0.55); text-align: right; }
 .footer-meta p { margin-bottom: 6px; }
+
+/* ============ Modals ============ */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(20, 33, 61, 0.55);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100;
+  padding: 24px;
+}
+.modal-overlay[hidden] { display: none; }
+.modal {
+  background: var(--paper);
+  border-radius: var(--radius-lg);
+  max-width: 560px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: var(--shadow-modal);
+}
+.modal-narrow { max-width: 460px; }
+.modal-close {
+  position: absolute; top: 14px; right: 16px;
+  background: rgba(20,33,61,0.08);
+  border: none; border-radius: 50%;
+  width: 34px; height: 34px;
+  font-size: 1.3rem; line-height: 1;
+  color: var(--ink);
+  z-index: 2;
+}
+.modal-image { width: 100%; height: 220px; object-fit: cover; }
+.modal-body { padding: 26px 28px 30px; display: flex; flex-direction: column; gap: 12px; }
+.modal-heading { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+.modal-heading h3 { font-size: 1.4rem; }
+.match-pill {
+  font-family: var(--font-mono); font-size: 0.78rem; font-weight: 700;
+  background: var(--gold); color: var(--ink);
+  padding: 5px 12px; border-radius: 999px; white-space: nowrap;
+}
+.modal-location { color: var(--text-muted); font-size: 0.9rem; }
+.modal-desc { font-size: 0.95rem; color: var(--ink-soft); }
+.modal-stats { display: flex; gap: 24px; padding: 14px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.stat-label { display: block; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); }
+.stat-value { display: block; font-family: var(--font-mono); font-weight: 600; margin-top: 4px; }
+.modal-amenities { display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* ============ Booking form ============ */
+.booking-form { padding: 30px 28px 28px; display: flex; flex-direction: column; gap: 4px; }
+.booking-form h3 { font-size: 1.3rem; margin-bottom: 4px; }
+.booking-hotel-name { color: var(--gold); font-weight: 600; margin-bottom: 14px; }
+.booking-form label { font-size: 0.82rem; font-weight: 600; margin-top: 12px; margin-bottom: 6px; }
+.booking-form input {
+  padding: 11px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.94rem;
+}
+.booking-form input:invalid:not(:placeholder-shown) { border-color: var(--rust); }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.field-error { color: var(--rust); font-size: 0.78rem; min-height: 16px; display: block; margin-top: 3px; }
+
+.booking-confirmation { padding: 34px 28px; text-align: center; }
+.confirm-badge {
+  font-family: var(--font-display);
+  font-size: 1.3rem; font-weight: 600; color: var(--forest);
+  margin-bottom: 8px;
+}
+.confirm-note { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 22px; }
+.confirm-details { display: flex; flex-direction: column; gap: 10px; text-align: left; margin-bottom: 24px; }
+.confirm-details div { display: flex; justify-content: space-between; border-bottom: 1px dashed var(--border); padding-bottom: 8px; }
+.confirm-details dt { color: var(--text-muted); font-size: 0.85rem; }
+.confirm-details dd { margin: 0; font-family: var(--font-mono); font-weight: 600; font-size: 0.88rem; }
+
+/* ============ Responsive ============ */
+@media (max-width: 860px) {
+  .hero-inner { grid-template-columns: 1fr; }
+  .hero-dial { order: -1; }
+  .fader-panel { grid-template-columns: 1fr; }
+  .fader-group { gap: 24px; }
+  .how-steps { grid-template-columns: 1fr; }
+  .footer-inner { flex-direction: column; }
+  .footer-meta { text-align: left; }
+}
+
+@media (max-width: 640px) {
+  .nav-links { position: absolute; top: 100%; left: 0; right: 0; background: var(--paper); flex-direction: column; padding: 18px 32px; border-bottom: 1px solid var(--border); display: none; }
+  .nav-links.open { display: flex; }
+  .nav-cta { display: none; }
+  .nav-toggle { display: block; }
+  .section-inner { padding: 56px 20px; }
+  .form-row { grid-template-columns: 1fr; }
+  .fader-group { flex-wrap: wrap; justify-content: center; }
+  .modal-stats { flex-wrap: wrap; gap: 16px; }
+}

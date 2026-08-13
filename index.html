@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="index.css">
 </head>
 <body>
- 
+
 <!-- ============ NAV ============ -->
 <header class="nav" id="top">
   <div class="nav-inner">
@@ -27,7 +27,7 @@
     </button>
   </div>
 </header>
- 
+
 <!-- ============ HERO ============ -->
 <section class="hero">
   <div class="hero-inner">
@@ -55,14 +55,14 @@
     </div>
   </div>
 </section>
- 
+
 <!-- ============ PREFERENCES ============ -->
 <section class="preferences" id="preferences">
   <div class="section-inner">
     <p class="eyebrow">Step one</p>
     <h2>Tell Us What Matters Most</h2>
     <p class="section-sub">Set each channel like a fader. StayMatch normalizes them to 100% automatically and recalculates every hotel's Match Score in real time.</p>
- 
+
     <div class="fader-panel">
       <div class="fader-group">
         <div class="fader" data-criterion="price">
@@ -87,7 +87,7 @@
           <span class="fader-pct" id="ratingWeightLabel">20%</span>
         </div>
       </div>
- 
+
       <div class="fader-readout">
         <div class="donut-wrap">
           <svg viewBox="0 0 120 120" class="donut" id="weightDonut">
@@ -103,13 +103,13 @@
     </div>
   </div>
 </section>
- 
+
 <!-- ============ COMPARE / FILTERS ============ -->
 <section class="compare" id="compare">
   <div class="section-inner">
     <p class="eyebrow">Step two</p>
     <h2>Compare Your Matches</h2>
- 
+
     <div class="filters">
       <div class="filter-field">
         <label for="searchInput">Search</label>
@@ -131,14 +131,14 @@
       </div>
       <button class="btn btn-ghost" id="resetFiltersBtn">Reset filters</button>
     </div>
- 
+
     <p class="results-count" id="resultsCount"></p>
- 
+
     <div class="hotel-grid" id="hotelGrid"></div>
     <p class="no-results" id="noResults" hidden>No hotels match your current filters.</p>
   </div>
 </section>
- 
+
 <!-- ============ HOW IT WORKS ============ -->
 <section class="how" id="how-it-works">
   <div class="section-inner">
@@ -192,6 +192,82 @@
     </div>
   </div>
 </footer>
+
+<!-- ============ HOTEL DETAILS MODAL ============ -->
+<div class="modal-overlay" id="detailsModal" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="detailsHotelName">
+    <button class="modal-close" id="closeDetailsModal" aria-label="Close">&times;</button>
+    <img class="modal-image" id="detailsImage" alt="">
+    <div class="modal-body">
+      <div class="modal-heading">
+        <h3 id="detailsHotelName"></h3>
+        <span class="match-pill" id="detailsScore"></span>
+      </div>
+      <p class="modal-location" id="detailsLocation"></p>
+      <p class="modal-desc" id="detailsDescription"></p>
+      <div class="modal-stats">
+        <div><span class="stat-label">Price</span><span class="stat-value" id="detailsPrice"></span></div>
+        <div><span class="stat-label">Rating</span><span class="stat-value" id="detailsRating"></span></div>
+        <div><span class="stat-label">Location Score</span><span class="stat-value" id="detailsLocationScore"></span></div>
+      </div>
+      <div class="modal-amenities" id="detailsAmenities"></div>
+      <button class="btn btn-primary btn-block" id="detailsBookBtn">Book Now</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ BOOKING MODAL ============ -->
+<div class="modal-overlay" id="bookingModal" hidden>
+  <div class="modal modal-narrow" role="dialog" aria-modal="true" aria-labelledby="bookingTitle">
+    <button class="modal-close" id="closeBookingModal" aria-label="Close">&times;</button>
+
+    <form id="bookingForm" class="booking-form" novalidate>
+      <h3 id="bookingTitle">Book Your Stay</h3>
+      <p class="booking-hotel-name" id="bookingHotelName"></p>
+
+      <label for="guestName">Guest name</label>
+      <input type="text" id="guestName" required>
+      <span class="field-error" id="guestNameError"></span>
+
+      <label for="guestEmail">Email</label>
+      <input type="email" id="guestEmail" required>
+      <span class="field-error" id="guestEmailError"></span>
+
+      <div class="form-row">
+        <div>
+          <label for="checkinDate">Check-in</label>
+          <input type="date" id="checkinDate" required>
+          <span class="field-error" id="checkinDateError"></span>
+        </div>
+        <div>
+          <label for="checkoutDate">Check-out</label>
+          <input type="date" id="checkoutDate" required>
+          <span class="field-error" id="checkoutDateError"></span>
+        </div>
+      </div>
+
+      <label for="guestCount">Number of guests</label>
+      <input type="number" id="guestCount" min="1" value="1" required>
+      <span class="field-error" id="guestCountError"></span>
+
+      <button type="submit" class="btn btn-primary btn-block">Confirm Booking</button>
+    </form>
+
+    <div class="booking-confirmation" id="bookingConfirmation" hidden>
+      <p class="confirm-badge">Booking Request Confirmed!</p>
+      <p class="confirm-note">This is a demo booking request — no payment has been processed.</p>
+      <dl class="confirm-details">
+        <div><dt>Confirmation #</dt><dd id="confirmNumber"></dd></div>
+        <div><dt>Hotel</dt><dd id="confirmHotel"></dd></div>
+        <div><dt>Guest</dt><dd id="confirmGuest"></dd></div>
+        <div><dt>Check-in</dt><dd id="confirmCheckin"></dd></div>
+        <div><dt>Check-out</dt><dd id="confirmCheckout"></dd></div>
+        <div><dt>Guests</dt><dd id="confirmGuestCount"></dd></div>
+      </dl>
+      <button class="btn btn-primary btn-block" id="backToHotelsBtn">Back to Hotels</button>
+    </div>
+  </div>
+</div>
 
 <script src="script.js"></script>
 </body>
