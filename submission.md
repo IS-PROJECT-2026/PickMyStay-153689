@@ -106,13 +106,15 @@
 
 ### Conflict 2 — Different Cause
 
-**What cause did you use?** Add/Add conflict — both branches independently created the same file.
+**What cause did you use?** Delete/modify conflict.
 
-**Why does this cause trigger a conflict?** This conflict occurs when two branches create a file with the same name and path, but Git cannot automatically decide which version of the newly created file should be kept.
+**Why does this cause trigger a conflict?** This conflict occurs when one branch modifies a file while another branch deletes the same file. Git cannot automatically determine whether the file should be kept with the modifications or deleted, so manual resolution is required.
 
-[To be completed later.]
 
-* **Caption:** Both branches independently created `conflict-2.txt`, resulting in an add/add conflict when the branches were merged. Git displayed conflict markers because the two newly created versions contained different content.
+![alt text](image-9.png)
+![alt text](image-10.png)
+
+* **Caption:**   The merge produced a delete-versus-modify conflict because `conflict2.txt` was modified on one branch while it was deleted on the other branch. Git required the conflicting file state to be resolved manually.
 
 ### Conflict 3 — Different Cause
 
