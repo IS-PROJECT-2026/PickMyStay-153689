@@ -84,35 +84,35 @@
 
 ### Conflict 1 — Full Chronology
 
-**What cause did you use?** [To be completed later.]
+**What cause did you use?** Same-line modification conflict.
 
 #### Step 1: Generating the Clash
 
-[To be completed later.]
+![alt text](image-4.png)
 
-* **Caption:** [To be completed later.]
+* **Caption:** The merge attempt between the two feature branches produced a conflict because both branches modified the same section of `script.js`.
 
 #### Step 2: Inside the Code Editor (Conflict Markers)
 
-[To be completed later.]
+![alt text](image-6.png)
 
-* **Caption:** [To be completed later.]
+* **Caption:** Git identified conflicting changes to the same line in `script.js`. The current branch added the `ranked-card` class while the incoming branch added the `featured-card` class, producing the merge conflict markers.
 
 #### Step 3: Resolution & Clean Merge
 
-[To be completed later.]
+![alt text](image-7.png)
 
-* **Caption:** [To be completed later.]
+* **Caption:** The conflicting changes were manually combined into a single valid implementation, the conflict markers were removed, and the merge was completed successfully with a clean working tree.
 
 ### Conflict 2 — Different Cause
 
-**What cause did you use?** [To be completed later.]
+**What cause did you use?** Add/Add conflict — both branches independently created the same file.
 
-**Why does this cause trigger a conflict?** [To be completed later.]
+**Why does this cause trigger a conflict?** This conflict occurs when two branches create a file with the same name and path, but Git cannot automatically decide which version of the newly created file should be kept.
 
 [To be completed later.]
 
-* **Caption:** [To be completed later.]
+* **Caption:** Both branches independently created `conflict-2.txt`, resulting in an add/add conflict when the branches were merged. Git displayed conflict markers because the two newly created versions contained different content.
 
 ### Conflict 3 — Different Cause
 
