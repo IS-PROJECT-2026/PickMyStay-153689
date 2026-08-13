@@ -115,6 +115,66 @@ const hotels = [
   }
 ];
 /* ---------------------------------------------------------------------- */
+/* 5. SCORING ALGORITHM                                                     */
+/* ---------------------------------------------------------------------- */
+ 
+/**
+ * Cheaper hotels score higher. Scores each hotel's price relative to the
+ * cheapest and most expensive hotel CURRENTLY in the filtered list, so the
+ * scale always reflects the options actually on screen.
+ */
+function calculatePriceScore(hotel, hotelList) {
+  const prices = hotelList.map(h => h.pricePerNight);
+  const min = Math.min(...prices);
+  const max = Math.max(...prices);
+ 
+  if (max === min) return 100; // every visible hotel costs the same
+ 
+  // invert the ratio so the cheapest hotel gets 100, the priciest gets 0
+  const ratio = (hotel.pricePerNight - min) / (max - min);
+  return (1 - ratio) * 100;
+}
+ 
+/** Converts the hotel's 1–10 locationScore into a 0–100 scale. */
+function calculateLocationScore(hotel) {
+  return (hotel.locationScore / 10) * 100;
+}
+ 
+/** Converts the hotel's 5-point rating into a 0–100 scale (e.g. 4.5/5 = 90/100). */
+function calculateRatingScore(hotel) {
+  return (hotel.rating / 5) * 100;
+}
+ 
+/**
+ * Combines the three sub-scores using the user's normalized weights:
+ * Overall = (Price × PriceWeight) + (Location × LocationWeight) + (Rating × RatingWeight)
+ */
+function calculateWeightedScore(hotel, hotelList, weights) {
+  const priceScore = calculatePriceScore(hotel, hotelList);
+  const locationScore = calculateLocationScore(hotel);
+  const ratingScore = calculateRatingScore(hotel);
+ 
+  const overall =
+    priceScore * (weights.price / 100) +
+    locationScore * (weights.location / 100) +
+    ratingScore * (weights.rating / 100);
+ 
+  return Math.round(overall * 10) / 10; // round to 1 decimal place
+}
+ 
+/** Scores every hotel in the list and returns them sorted highest-first. */
+function rankHotels(hotelList) {
+  const w = getNormalizedWeights();
+ 
+  const scored = hotelList.map(hotel => ({
+    ...hotel,
+    matchScore: calculateWeightedScore(hotel, hotelList, w)
+  }));
+ 
+  return scored.sort((a, b) => b.matchScore - a.matchScore);
+}
+ 
+/* ---------------------------------------------------------------------- */
 /* 6. FILTERING                                                             */
 /* ---------------------------------------------------------------------- */
  
@@ -213,3 +273,4 @@ function updateRecommendations() {
   const ranked = rankHotels(filtered);
   renderHotels(ranked);
 }
+ 
