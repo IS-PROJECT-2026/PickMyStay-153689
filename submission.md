@@ -118,22 +118,15 @@
 
 ### Conflict 3 — Different Cause
 
-**What cause did you use?** [To be completed later.]
+**What cause did you use?** Rename vs Modify conflict.
 
-**Why does this cause trigger a conflict?** [To be completed later.]
+**Why does this cause trigger a conflict?** This conflict occurred because one branch renamed conflict3.txt to conflict3-renamed.txt, while another branch modified the original conflict3.txt. Git could not automatically reconcile the file rename with the modification made to the original file, so it reported a rename/modify conflict that required manual resolution.
+The conflict was created by merging conflict-3-rename into conflict-3-modify. The conflict was then resolved manually and the merge was completed successfully.
 
-[To be completed later.]
+![alt text](image-11.png)
+![alt text](image-12.png)
 
-* **Caption:** [To be completed later.]
-
+* **Caption:** Rename vs Modify conflict showing Git's conflict message before manual resolution.
 ---
 
-## 6. Feedback & Evaluation
 
-* **Anonymous Evaluation Form:** [Course & Instructor Evaluation]
-
----
-
-## Final Submission
-
-The completed project will be submitted through the official course submission form before the stated deadline.
