@@ -88,19 +88,19 @@
 
 #### Step 1: Generating the Clash
 
-![alt text](image-4.png)
+![alt text](image-14.png)
 
 * **Caption:** The merge attempt between the two feature branches produced a conflict because both branches modified the same section of `script.js`.
 
 #### Step 2: Inside the Code Editor (Conflict Markers)
 
-![alt text](image-6.png)
+![alt text](image-13.png)
 
 * **Caption:** Git identified conflicting changes to the same line in `script.js`. The current branch added the `ranked-card` class while the incoming branch added the `featured-card` class, producing the merge conflict markers.
 
 #### Step 3: Resolution & Clean Merge
 
-![alt text](image-7.png)
+![alt text](image-15.png)
 
 * **Caption:** The conflicting changes were manually combined into a single valid implementation, the conflict markers were removed, and the merge was completed successfully with a clean working tree.
 
