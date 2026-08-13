@@ -84,54 +84,49 @@
 
 ### Conflict 1 — Full Chronology
 
-**What cause did you use?** [To be completed later.]
+**What cause did you use?** Same-line modification conflict.
 
 #### Step 1: Generating the Clash
 
-[To be completed later.]
+![alt text](image-4.png)
 
-* **Caption:** [To be completed later.]
+* **Caption:** The merge attempt between the two feature branches produced a conflict because both branches modified the same section of `script.js`.
 
 #### Step 2: Inside the Code Editor (Conflict Markers)
 
-[To be completed later.]
+![alt text](image-6.png)
 
-* **Caption:** [To be completed later.]
+* **Caption:** Git identified conflicting changes to the same line in `script.js`. The current branch added the `ranked-card` class while the incoming branch added the `featured-card` class, producing the merge conflict markers.
 
 #### Step 3: Resolution & Clean Merge
 
-[To be completed later.]
+![alt text](image-7.png)
 
-* **Caption:** [To be completed later.]
+* **Caption:** The conflicting changes were manually combined into a single valid implementation, the conflict markers were removed, and the merge was completed successfully with a clean working tree.
 
 ### Conflict 2 — Different Cause
 
-**What cause did you use?** [To be completed later.]
+**What cause did you use?** Delete/modify conflict.
 
-**Why does this cause trigger a conflict?** [To be completed later.]
+**Why does this cause trigger a conflict?** This conflict occurs when one branch modifies a file while another branch deletes the same file. Git cannot automatically determine whether the file should be kept with the modifications or deleted, so manual resolution is required.
 
-[To be completed later.]
 
-* **Caption:** [To be completed later.]
+![alt text](image-9.png)
+![alt text](image-10.png)
+
+* **Caption:**   The merge produced a delete-versus-modify conflict because `conflict2.txt` was modified on one branch while it was deleted on the other branch. Git required the conflicting file state to be resolved manually.
 
 ### Conflict 3 — Different Cause
 
-**What cause did you use?** [To be completed later.]
+**What cause did you use?** Rename vs Modify conflict.
 
-**Why does this cause trigger a conflict?** [To be completed later.]
+**Why does this cause trigger a conflict?** This conflict occurred because one branch renamed conflict3.txt to conflict3-renamed.txt, while another branch modified the original conflict3.txt. Git could not automatically reconcile the file rename with the modification made to the original file, so it reported a rename/modify conflict that required manual resolution.
+The conflict was created by merging conflict-3-rename into conflict-3-modify. The conflict was then resolved manually and the merge was completed successfully.
 
-[To be completed later.]
+![alt text](image-11.png)
+![alt text](image-12.png)
 
-* **Caption:** [To be completed later.]
-
+* **Caption:** Rename vs Modify conflict showing Git's conflict message before manual resolution.
 ---
 
-## 6. Feedback & Evaluation
 
-* **Anonymous Evaluation Form:** [Course & Instructor Evaluation]
-
----
-
-## Final Submission
-
-The completed project will be submitted through the official course submission form before the stated deadline.
