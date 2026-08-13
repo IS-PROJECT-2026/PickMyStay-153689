@@ -114,6 +114,78 @@ const hotels = [
     amenities: ["WiFi", "Shuttle", "24hr Reception"]
   }
 ];
+
+/* ---------------------------------------------------------------------- */
+/* 4. WEIGHT NORMALIZATION                                                  */
+/* ---------------------------------------------------------------------- */
+ 
+/**
+ * Reads the raw slider values and normalizes them so price + location +
+ * rating always sum to exactly 100%. Sliders don't naturally sum to 100,
+ * so this treats each raw value as a proportion of the combined total.
+ */
+function getNormalizedWeights() {
+  const raw = {
+    price: Number(priceWeightInput.value),
+    location: Number(locationWeightInput.value),
+    rating: Number(ratingWeightInput.value)
+  };
+  const total = raw.price + raw.location + raw.rating;
+ 
+  if (total === 0) {
+    // avoid division by zero — fall back to an even split
+    return { price: 33.3, location: 33.3, rating: 33.4 };
+  }
+ 
+  return {
+    price: (raw.price / total) * 100,
+    location: (raw.location / total) * 100,
+    rating: (raw.rating / total) * 100
+  };
+}
+ 
+/**
+ * Updates the % labels, the hero dial, and the donut chart to reflect
+ * the current normalized weights. Purely visual — does not recalculate scores.
+ */
+function refreshWeightDisplays() {
+  const w = getNormalizedWeights();
+ 
+  priceWeightLabel.textContent = `${Math.round(w.price)}%`;
+  locationWeightLabel.textContent = `${Math.round(w.location)}%`;
+  ratingWeightLabel.textContent = `${Math.round(w.rating)}%`;
+ 
+  heroDialValue.textContent = `${Math.round(w.price)} / ${Math.round(w.location)} / ${Math.round(w.rating)}`;
+  heroDialRing.style.background = `conic-gradient(
+    var(--ink) 0% ${w.price}%,
+    var(--gold) ${w.price}% ${w.price + w.location}%,
+    var(--rust) ${w.price + w.location}% 100%
+  )`;
+ 
+  drawWeightDonut(w);
+}
+ 
+/**
+ * Draws the three-segment donut chart (SVG circles) to match the current
+ * normalized weights, using stroke-dasharray/offset on a shared circumference.
+ */
+function drawWeightDonut(w) {
+  const r = 50;
+  const circumference = 2 * Math.PI * r;
+ 
+  const priceLen = (w.price / 100) * circumference;
+  const locationLen = (w.location / 100) * circumference;
+  const ratingLen = (w.rating / 100) * circumference;
+ 
+  segPrice.style.strokeDasharray = `${priceLen} ${circumference - priceLen}`;
+  segPrice.style.strokeDashoffset = 0;
+ 
+  segLocation.style.strokeDasharray = `${locationLen} ${circumference - locationLen}`;
+  segLocation.style.strokeDashoffset = -priceLen;
+ 
+  segRating.style.strokeDasharray = `${ratingLen} ${circumference - ratingLen}`;
+  segRating.style.strokeDashoffset = -(priceLen + locationLen);
+}
 /* ---------------------------------------------------------------------- */
 /* 5. SCORING ALGORITHM                                                     */
 /* ---------------------------------------------------------------------- */
