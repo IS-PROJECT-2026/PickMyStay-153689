@@ -37,6 +37,42 @@
   background: var(--ink);
   margin: 5px 0;
 }
+/* ============ Filters ============ */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: flex-end;
+  margin-bottom: 12px;
+  padding: 24px;
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+.filter-field { display: flex; flex-direction: column; gap: 6px; min-width: 160px; flex: 1; }
+.filter-field label { font-size: 0.8rem; font-weight: 600; color: var(--text-muted); }
+.filter-field input, .filter-field select {
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: #fff;
+  font-size: 0.92rem;
+}
+.filter-field input:focus, .filter-field select:focus,
+.fader-input:focus-visible, .btn:focus-visible, a:focus-visible {
+  outline: 2px solid var(--gold); outline-offset: 2px;
+}
+ 
+.results-count { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 24px; }
+.no-results {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-muted);
+  font-size: 1rem;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-md);
+}
+
 /* ============ Hotel cards ============ */
 .hotel-grid {
   display: grid;

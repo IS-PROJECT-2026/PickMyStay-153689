@@ -114,7 +114,45 @@ const hotels = [
     amenities: ["WiFi", "Shuttle", "24hr Reception"]
   }
 ];
-
+/* ---------------------------------------------------------------------- */
+/* 6. FILTERING                                                             */
+/* ---------------------------------------------------------------------- */
+ 
+const searchInput = document.getElementById("searchInput");
+const maxPriceInput = document.getElementById("maxPriceInput");
+const minRatingInput = document.getElementById("minRatingInput");
+const resetFiltersBtn = document.getElementById("resetFiltersBtn");
+ 
+/** Applies search text, max price, and min rating filters to the full dataset. */
+function filterHotels() {
+  const query = searchInput.value.trim().toLowerCase();
+  const maxPrice = maxPriceInput.value ? Number(maxPriceInput.value) : Infinity;
+  const minRating = Number(minRatingInput.value);
+ 
+  return hotels.filter(hotel => {
+    const matchesQuery =
+      !query ||
+      hotel.name.toLowerCase().includes(query) ||
+      hotel.location.toLowerCase().includes(query);
+    const matchesPrice = hotel.pricePerNight <= maxPrice;
+    const matchesRating = hotel.rating >= minRating;
+ 
+    return matchesQuery && matchesPrice && matchesRating;
+  });
+}
+ 
+resetFiltersBtn.addEventListener("click", () => {
+  searchInput.value = "";
+  maxPriceInput.value = "";
+  minRatingInput.value = "0";
+  updateRecommendations();
+});
+ 
+[searchInput, maxPriceInput, minRatingInput].forEach(el => {
+  el.addEventListener("input", updateRecommendations);
+});
+ 
+/* ---------------------------------------------------------------------- */
 /* 7. RENDERING                                                             */
 /* ---------------------------------------------------------------------- */
  
@@ -140,7 +178,6 @@ function renderHotels(rankedList) {
  
     card.innerHTML = `
       ${index === 0 ? '<span class="best-badge">Best Match</span>' : ""}
-      
       <img class="hotel-image" src="${hotel.image}" alt="${hotel.name}">
       <div class="hotel-body">
         <div class="hotel-top-row">
@@ -167,4 +204,12 @@ function renderHotels(rankedList) {
  
     hotelGrid.appendChild(card);
   });
+}
+ 
+/** Central refresh function: filters, scores, ranks, and re-renders. */
+function updateRecommendations() {
+  refreshWeightDisplays();
+  const filtered = filterHotels();
+  const ranked = rankHotels(filtered);
+  renderHotels(ranked);
 }

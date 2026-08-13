@@ -27,7 +27,83 @@
     </button>
   </div>
 </header>
-
+ 
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <p class="eyebrow">A personalized hotel decision engine</p>
+      <h1>Find the Hotel That<br>Fits <em>You</em> Best</h1>
+      <p class="hero-sub">Most sites show you the cheapest hotel, or the highest-rated one. StayMatch asks what actually matters to <em>you</em> — price, location, or rating — and re-ranks every hotel in Nairobi around your priorities.</p>
+      <div class="hero-actions">
+        <button class="btn btn-primary" id="startComparingBtn">Start Comparing</button>
+        <a href="#how-it-works" class="btn btn-ghost">See how it works</a>
+      </div>
+    </div>
+    <div class="hero-dial" aria-hidden="true">
+      <div class="dial-ring" id="heroDialRing">
+        <div class="dial-center">
+          <span class="dial-label">Your Balance</span>
+          <span class="dial-value" id="heroDialValue">50 / 30 / 20</span>
+        </div>
+      </div>
+      <div class="dial-legend">
+        <span><i class="swatch swatch-price"></i>Price</span>
+        <span><i class="swatch swatch-location"></i>Location</span>
+        <span><i class="swatch swatch-rating"></i>Rating</span>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- ============ PREFERENCES ============ -->
+<section class="preferences" id="preferences">
+  <div class="section-inner">
+    <p class="eyebrow">Step one</p>
+    <h2>Tell Us What Matters Most</h2>
+    <p class="section-sub">Set each channel like a fader. StayMatch normalizes them to 100% automatically and recalculates every hotel's Match Score in real time.</p>
+ 
+    <div class="fader-panel">
+      <div class="fader-group">
+        <div class="fader" data-criterion="price">
+          <div class="fader-track">
+            <input type="range" min="0" max="100" value="50" class="fader-input" id="priceWeight" aria-label="Price importance">
+          </div>
+          <span class="fader-name">Price</span>
+          <span class="fader-pct" id="priceWeightLabel">50%</span>
+        </div>
+        <div class="fader" data-criterion="location">
+          <div class="fader-track">
+            <input type="range" min="0" max="100" value="30" class="fader-input" id="locationWeight" aria-label="Location importance">
+          </div>
+          <span class="fader-name">Location</span>
+          <span class="fader-pct" id="locationWeightLabel">30%</span>
+        </div>
+        <div class="fader" data-criterion="rating">
+          <div class="fader-track">
+            <input type="range" min="0" max="100" value="20" class="fader-input" id="ratingWeight" aria-label="Rating importance">
+          </div>
+          <span class="fader-name">Rating</span>
+          <span class="fader-pct" id="ratingWeightLabel">20%</span>
+        </div>
+      </div>
+ 
+      <div class="fader-readout">
+        <div class="donut-wrap">
+          <svg viewBox="0 0 120 120" class="donut" id="weightDonut">
+            <circle cx="60" cy="60" r="50" class="donut-track"></circle>
+            <circle cx="60" cy="60" r="50" class="donut-seg donut-price" id="segPrice"></circle>
+            <circle cx="60" cy="60" r="50" class="donut-seg donut-location" id="segLocation"></circle>
+            <circle cx="60" cy="60" r="50" class="donut-seg donut-rating" id="segRating"></circle>
+          </svg>
+          <div class="donut-total">100%</div>
+        </div>
+        <button class="btn btn-primary" id="updateRecsBtn">Update Recommendations</button>
+      </div>
+    </div>
+  </div>
+</section>
+ 
 <!-- ============ COMPARE / FILTERS ============ -->
 <section class="compare" id="compare">
   <div class="section-inner">
@@ -60,6 +136,31 @@
  
     <div class="hotel-grid" id="hotelGrid"></div>
     <p class="no-results" id="noResults" hidden>No hotels match your current filters.</p>
+  </div>
+</section>
+ 
+<!-- ============ HOW IT WORKS ============ -->
+<section class="how" id="how-it-works">
+  <div class="section-inner">
+    <p class="eyebrow">The method</p>
+    <h2>Choose With Confidence</h2>
+    <div class="how-steps">
+      <div class="how-step">
+        <span class="how-num">1</span>
+        <h3>Set Your Priorities</h3>
+        <p>Choose how important price, location, and rating are to your stay.</p>
+      </div>
+      <div class="how-step">
+        <span class="how-num">2</span>
+        <h3>Compare Your Matches</h3>
+        <p>StayMatch calculates a personalized Match Score for every hotel.</p>
+      </div>
+      <div class="how-step">
+        <span class="how-num">3</span>
+        <h3>Choose With Confidence</h3>
+        <p>Review your highest-ranked hotels and book the one that fits.</p>
+      </div>
+    </div>
   </div>
 </section>
 
