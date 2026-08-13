@@ -345,4 +345,42 @@ function updateRecommendations() {
   const ranked = rankHotels(filtered);
   renderHotels(ranked);
 }
+ /* ---------------------------------------------------------------------- */
+/* 8. HOTEL DETAILS MODAL                                                   */
+/* ---------------------------------------------------------------------- */
  
+const detailsModal = document.getElementById("detailsModal");
+const closeDetailsModal = document.getElementById("closeDetailsModal");
+ 
+function openHotelDetails(hotelId) {
+  const filtered = filterHotels();
+  const ranked = rankHotels(filtered);
+  const hotel = ranked.find(h => h.id === hotelId) || rankHotels(hotels).find(h => h.id === hotelId);
+  if (!hotel) return;
+ 
+  activeHotelId = hotelId;
+ 
+  document.getElementById("detailsImage").src = hotel.image;
+  document.getElementById("detailsImage").alt = hotel.name;
+  document.getElementById("detailsHotelName").textContent = hotel.name;
+  document.getElementById("detailsScore").textContent = `Match Score: ${hotel.matchScore}%`;
+  document.getElementById("detailsLocation").textContent = hotel.location;
+  document.getElementById("detailsDescription").textContent = hotel.description;
+  document.getElementById("detailsPrice").textContent = `KES ${hotel.pricePerNight.toLocaleString()}/night`;
+  document.getElementById("detailsRating").textContent = `★ ${hotel.rating.toFixed(1)} / 5`;
+  document.getElementById("detailsLocationScore").textContent = `${hotel.locationScore} / 10`;
+  document.getElementById("detailsAmenities").innerHTML = hotel.amenities
+    .map(a => `<span class="amenity-tag">${a}</span>`)
+    .join("");
+ 
+  detailsModal.hidden = false;
+}
+ 
+closeDetailsModal.addEventListener("click", () => (detailsModal.hidden = true));
+detailsModal.addEventListener("click", e => {
+  if (e.target === detailsModal) detailsModal.hidden = true;
+});
+document.getElementById("detailsBookBtn").addEventListener("click", () => {
+  detailsModal.hidden = true;
+  openBookingForm(activeHotelId);
+});
