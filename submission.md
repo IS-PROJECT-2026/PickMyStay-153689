@@ -10,7 +10,7 @@
 
 ## 2. Deployed Project Link
 
-* **Live GitHub Pages URL:** [To be added after deployment]
+* **Live GitHub Pages URL:**https://is-project-2026.github.io/PickMyStay-153689/
 
 ---
 
@@ -18,23 +18,25 @@
 
 ### A. Your Best Commit
 
-* **Commit URL:** [To be added after development]
-* **Why this one?** [To be completed after selecting the best Conventional Commit from the project history.]
+* **Commit URL:** https://github.com/IS-PROJECT-2026/PickMyStay-153689/commit/ed86e9d4349054a8421d7f79c0bd735804760fa9
+* **Why this one?** This commit demonstrates a clear Conventional Commit message and contains a focused change for implementing the weighted hotel ranking functionality. The change is isolated to the feature branch and has a clear relationship with the corresponding GitHub issue.
 
 ### B. A Mistake or Struggle
 
-* **Link to the evidence:** [To be added later]
-* **What happened and how did you recover?** [To be completed later based on an actual Git/PR/deployment issue.]
+* **Link to the evidence:** https://github.com/IS-PROJECT-2026/PickMyStay-153689/pull/23
+![alt text](image-8.png)
+* **What happened and how did you recover?** I successfully committed the weighted hotel ranking changes locally, but the first attempt to push the `feat/8-weighted-hotel-ranking` branch failed with a `Could not resolve host: github.com` error. The problem was a network/DNS connectivity issue rather than a problem with the commit itself, so I kept the existing commit and retried the push once GitHub connectivity was available instead of creating another unnecessary commit.
 
 ### C. A Pull Request You're Proud Of
 
-* **PR URL:** [To be added after the first PR]
-* **What did you check before merging?** [To be completed after reviewing a PR.]
+* **PR URL:** https://github.com/IS-PROJECT-2026/PickMyStay-153689/pull/22
+* **What did you check before merging?** I reviewed the changed script.js code to confirm that the price scoring function was implemented correctly, checked that the changes were limited to the intended functionality, and verified that the PR correctly linked to Issue #7 before merging it into main.
 
 ### D. One Thing You Would Do Differently
 
-* **What would you change?** [To be completed after gaining experience with the project workflow.]
-* **Link to the evidence of the original decision:** [To be added later]
+* **What would you change?** I would plan the Conventional Commit types earlier instead of relying heavily on feat and chore. I would intentionally use appropriate types such as style and fix throughout development so that the commit history demonstrates a wider range of professional Git practices from the beginning.
+* **Link to the evidence of the original decision:** (https://github.com/IS-PROJECT-2026/PickMyStay-153689/pulls?q=is%3Apr+is%3Aclosed)
+![alt text](image-7.png)
 
 ---
 
@@ -61,22 +63,21 @@
 
 ### B. Project Board
 
-[PASTE PROJECT BOARD SCREENSHOT HERE]
+![alt text](image-4.png)
 
 * **Caption:** The Kanban project board tracks development tasks through the To Do, In Progress, and Done stages.
 
 ### C. Branching Architecture
 
-[PASTE BRANCHING SCREENSHOT HERE]
+![alt text](image-5.png)
 
 * **Caption:** The repository uses issue-linked feature branches to isolate development work from the protected main branch.
 
 ### D. Pull Requests & Traceability
 
-[To be completed after the first Pull Request.]
+![alt text](image-6.png)
 
-* **Caption:** [To be added after the first PR is created.]
-
+* **Caption:** Pull request for developing reusable hotel cards that display key hotel information such as name, price, location, rating, and image.
 ---
 
 ## 5. Merge Conflict Evidence
