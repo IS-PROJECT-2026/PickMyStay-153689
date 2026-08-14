@@ -25,7 +25,7 @@
 
 * **Link to the evidence:** https://github.com/IS-PROJECT-2026/PickMyStay-153689/pull/23
 
-![alt text](image-8.png)
+![alt text](evidence\B-evidence.png)
 
 * **What happened and how did you recover?** I successfully committed the weighted hotel ranking changes locally, but the first attempt to push the `feat/8-weighted-hotel-ranking` branch failed with a `Could not resolve host: github.com` error. The problem was a network/DNS connectivity issue rather than a problem with the commit itself, so I kept the existing commit and retried the push once GitHub connectivity was available instead of creating another unnecessary commit.
 
@@ -40,7 +40,7 @@
 * **What would you change?** I would plan the Conventional Commit types earlier instead of relying heavily on feat and chore. I would intentionally use appropriate types such as style and fix throughout development so that the commit history demonstrates a wider range of professional Git practices from the beginning.
 
 * **Link to the evidence of the original decision:** (https://github.com/IS-PROJECT-2026/PickMyStay-153689/pulls?q=is%3Apr+is%3Aclosed)
-![alt text](image-7.png)
+![alt text](evidence\milestones-overview.png)
 
 ---
 
@@ -48,38 +48,38 @@
 
 ### A. Milestones and Issues
 
-![alt text](image.png)
+![alt text](evidence\milestones-overview.png)
 
 * **Caption:** Overview of the three development milestones created for PickMyStay
 
-![alt text](image-1.png)
+![alt text](evidence\milestone-1-issues.png)
 
 * **Caption:**The Hotel Catalogue & Interface milestone contains issues covering the initial project structure, hotel data, interface components, images, responsiveness, and search/filter functionality.
 
-![alt text](image-2.png)
+![alt text](evidence\milestone-2-issues.png)
 
 * **Caption:**The Smart Hotel Ranking milestone contains issues for implementing hotel scoring, weighted ranking, user preference controls, and recommendation results.
 
-![alt text](image-3.png)
+![alt text](evidence\milestone-3-issues.png)
 
 * **Caption:**The Booking & Deployment milestone contains issues covering the booking flow, validation, confirmation, GitHub Pages deployment, documentation, and merge conflict evidence.
 
 
 ### B. Project Board
 
-![alt text](image-4.png)
+![alt text](evidence\project-board.png)
 
 * **Caption:** The Kanban project board tracks development tasks through the To Do, In Progress, and Done stages.
 
 ### C. Branching Architecture
 
-![alt text](image-5.png)
+![alt text](evidence\branches.png)
 
 * **Caption:** The repository uses issue-linked feature branches to isolate development work from the protected main branch.
 
 ### D. Pull Requests & Traceability
 
-![alt text](image-6.png)
+![alt text](evidence\pull-request.png)
 
 * **Caption:** Pull request for developing reusable hotel cards that display key hotel information such as name, price, location, rating, and image.
 ---
@@ -92,19 +92,18 @@
 
 #### Step 1: Generating the Clash
 
-![alt text](image-14.png)
+![alt text](evidence\conflict1-step1.png)
 
 * **Caption:** The merge attempt between the two feature branches produced a conflict because both branches modified the same section of `script.js`.
 
 #### Step 2: Inside the Code Editor (Conflict Markers)
 
-![alt text](image-13.png)
-
+![alt text](evidence\conflict1-step2.png)
 * **Caption:** Git identified conflicting changes to the same line in `script.js`. The current branch added the `ranked-card` class while the incoming branch added the `featured-card` class, producing the merge conflict markers.
 
 #### Step 3: Resolution & Clean Merge
 
-![alt text](image-15.png)
+![alt text](evidence\conflict-1-resolution.png)
 
 * **Caption:** The conflicting changes were manually combined into a single valid implementation, the conflict markers were removed, and the merge was completed successfully with a clean working tree.
 
@@ -115,8 +114,8 @@
 **Why does this cause trigger a conflict?** This conflict occurs when one branch modifies a file while another branch deletes the same file. Git cannot automatically determine whether the file should be kept with the modifications or deleted, so manual resolution is required.
 
 
-![alt text](image-9.png)
-![alt text](image-10.png)
+![alt text](evidence\conflict-2.1.png)
+![alt text](evidence\conflict-2.2.png)
 
 * **Caption:**   The merge produced a delete-versus-modify conflict because `conflict2.txt` was modified on one branch while it was deleted on the other branch. Git required the conflicting file state to be resolved manually.
 
@@ -127,8 +126,9 @@
 **Why does this cause trigger a conflict?** This conflict occurred because one branch renamed conflict3.txt to conflict3-renamed.txt, while another branch modified the original conflict3.txt. Git could not automatically reconcile the file rename with the modification made to the original file, so it reported a rename/modify conflict that required manual resolution.
 The conflict was created by merging conflict-3-rename into conflict-3-modify. The conflict was then resolved manually and the merge was completed successfully.
 
-![alt text](image-11.png)
-![alt text](image-12.png)
+![alt text](evidence\conflict-3.1.png)
+![alt text](evidence\conflict-3.2.png)
+
 
 * **Caption:** Rename vs Modify conflict showing Git's conflict message before manual resolution.
 ---

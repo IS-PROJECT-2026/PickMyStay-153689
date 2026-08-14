@@ -341,7 +341,7 @@ function renderHotels(rankedList) {
 
   rankedList.forEach((hotel, index) => {
     const card = document.createElement("article");
-    card.className = "hotel-card" + (index === 0 ? " best-match" : "");
+    card.className = "hotel-card featured-card " + (index === 0 ? " best-match" : "");
     card.dataset.hotelId = hotel.id;
 
     card.innerHTML = `
