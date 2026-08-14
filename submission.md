@@ -24,17 +24,21 @@
 ### B. A Mistake or Struggle
 
 * **Link to the evidence:** https://github.com/IS-PROJECT-2026/PickMyStay-153689/pull/23
+
 ![alt text](image-8.png)
+
 * **What happened and how did you recover?** I successfully committed the weighted hotel ranking changes locally, but the first attempt to push the `feat/8-weighted-hotel-ranking` branch failed with a `Could not resolve host: github.com` error. The problem was a network/DNS connectivity issue rather than a problem with the commit itself, so I kept the existing commit and retried the push once GitHub connectivity was available instead of creating another unnecessary commit.
 
 ### C. A Pull Request You're Proud Of
 
 * **PR URL:** https://github.com/IS-PROJECT-2026/PickMyStay-153689/pull/22
+
 * **What did you check before merging?** I reviewed the changed script.js code to confirm that the price scoring function was implemented correctly, checked that the changes were limited to the intended functionality, and verified that the PR correctly linked to Issue #7 before merging it into main.
 
 ### D. One Thing You Would Do Differently
 
 * **What would you change?** I would plan the Conventional Commit types earlier instead of relying heavily on feat and chore. I would intentionally use appropriate types such as style and fix throughout development so that the commit history demonstrates a wider range of professional Git practices from the beginning.
+
 * **Link to the evidence of the original decision:** (https://github.com/IS-PROJECT-2026/PickMyStay-153689/pulls?q=is%3Apr+is%3Aclosed)
 ![alt text](image-7.png)
 
@@ -46,19 +50,19 @@
 
 ![alt text](image.png)
 
-**Caption:** Overview of the three development milestones created for PickMyStay
+* **Caption:** Overview of the three development milestones created for PickMyStay
 
 ![alt text](image-1.png)
 
-**Caption:**The Hotel Catalogue & Interface milestone contains issues covering the initial project structure, hotel data, interface components, images, responsiveness, and search/filter functionality.
+* **Caption:**The Hotel Catalogue & Interface milestone contains issues covering the initial project structure, hotel data, interface components, images, responsiveness, and search/filter functionality.
 
 ![alt text](image-2.png)
 
-**Caption:**The Smart Hotel Ranking milestone contains issues for implementing hotel scoring, weighted ranking, user preference controls, and recommendation results.
+* **Caption:**The Smart Hotel Ranking milestone contains issues for implementing hotel scoring, weighted ranking, user preference controls, and recommendation results.
 
 ![alt text](image-3.png)
 
-**Caption:**The Booking & Deployment milestone contains issues covering the booking flow, validation, confirmation, GitHub Pages deployment, documentation, and merge conflict evidence.
+* **Caption:**The Booking & Deployment milestone contains issues covering the booking flow, validation, confirmation, GitHub Pages deployment, documentation, and merge conflict evidence.
 
 
 ### B. Project Board
