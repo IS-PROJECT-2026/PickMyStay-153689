@@ -24,8 +24,11 @@ From there you can open a hotel's details, click **Book Now**, and go through a 
 
 ```
 PickMyStay-153689/
-├── index.html      
-├── styles.css       
-├── script.js       
-└── README.md
+├── .qodo/
+├── evidence/
+├── index.css
+├── index.html
+├── README.md
+├── script.js
+└── submission.md
 ```
